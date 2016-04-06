@@ -29,9 +29,9 @@ except NameError:
         return input(prompt)
 
 try:
-    import DNS
-    ServerError = DNS.ServerError
-    DNS.DiscoverNameServers()
+    import pyDNS
+    ServerError = pyDNS.ServerError
+    pyDNS.DiscoverNameServers()
 except (ImportError, AttributeError):
     DNS = None
 
@@ -99,7 +99,7 @@ MX_CHECK_CACHE = {}
 def get_mx_ip(hostname):
     if hostname not in MX_DNS_CACHE:
         try:
-            MX_DNS_CACHE[hostname] = DNS.mxlookup(hostname)
+            MX_DNS_CACHE[hostname] = pyDNS.mxlookup(hostname)
         except ServerError as e:
             if e.rcode == 3 or e.rcode == 2:  # NXDOMAIN (Non-Existent Domain) or SERVFAIL
                 MX_DNS_CACHE[hostname] = None
