@@ -33,7 +33,7 @@ try:
     ServerError = pyDNS.ServerError
     pyDNS.DiscoverNameServers()
 except (ImportError, AttributeError):
-    DNS = None
+    pyDNS = None
 
     class ServerError(Exception):
         pass
@@ -127,7 +127,7 @@ def validate_email(email, check_mx=False, verify=False, debug=False, smtp_timeou
         assert re.match(VALID_ADDRESS_REGEXP, email) is not None
         check_mx |= verify
         if check_mx:
-            if not DNS:
+            if not pyDNS:
                 raise Exception('For check the mx records or check if the email exists you must '
                                 'have installed pyDNS python package')
             hostname = email[email.find('@') + 1:]
